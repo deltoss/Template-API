@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TemplateService.Domain
+namespace Infrastructure
 {
     public class Class1
     {
