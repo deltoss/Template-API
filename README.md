@@ -1,4 +1,4 @@
-# Template Generator API
+# Template Service
 
 A simple REST API for storing and generating your personal code templates, boilerplate, and project structures.
 

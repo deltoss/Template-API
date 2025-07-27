@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["TemplateAPI.Web/TemplateAPI.Web.csproj", "TemplateAPI.Web/"]
-RUN dotnet restore "./TemplateAPI.Web/TemplateAPI.Web.csproj"
+COPY ["TemplateService.Api/TemplateService.Api.csproj", "TemplateService.Api/"]
+RUN dotnet restore "./TemplateService.Api/TemplateService.Api.csproj"
 COPY . .
-WORKDIR "/src/TemplateAPI.Web"
-RUN dotnet build "./TemplateAPI.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/TemplateService.Api"
+RUN dotnet build "./TemplateService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./TemplateAPI.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./TemplateService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TemplateAPI.Web.dll"]
+ENTRYPOINT ["dotnet", "TemplateService.Api.dll"]
