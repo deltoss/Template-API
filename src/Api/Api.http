@@ -1,6 +1,38 @@
 @Api_HostAddress = http://localhost:5159
 
-GET {{Api_HostAddress}}/weatherforecast/
+GET {{Api_HostAddress}}/templates/
 Accept: application/json
+
+###
+
+GET {{Api_HostAddress}}/templates/email-thank-you
+Accept: application/json
+
+###
+
+POST {{Api_HostAddress}}/templates
+Content-Type: application/json
+
+{
+    "id": "email-client-registration",
+    "name": "Email: Client Registration",
+    "description": "Email to sent to new clients when they sign-up.",
+    "content": "Hello client, thank you for signing up with us!"
+}
+
+###
+
+GET {{Api_HostAddress}}/templates/email-client-registration
+Accept: application/json
+
+###
+
+POST {{Api_HostAddress}}/templates/email-thank-you/generate
+Content-Type: application/json
+
+{
+    "name": "Jack",
+    "project": "Hackavator"
+}
 
 ###
